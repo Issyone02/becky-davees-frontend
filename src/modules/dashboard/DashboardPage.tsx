@@ -76,10 +76,10 @@ export function DashboardPage() {
         {/* Attendance: calendar for parents, trend chart for staff */}
         {isParent && <ParentAttendanceCalendar />}
         {!isParent && (
-        <Card className="lg:col-span-2">
-          <div className="flex items-center justify-between mb-4">
+        <Card className="lg:col-span-2 min-w-0 w-full overflow-hidden">
+          <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
             <h2 className="font-semibold text-text-primary">Attendance Trend</h2>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <div className="flex gap-1">
                 {(['area', 'bar'] as const).map((t) => (
                   <button key={t} onClick={() => setChartType(t)} title={`Switch to ${t} chart`}
@@ -98,8 +98,8 @@ export function DashboardPage() {
               </div>
             </div>
           </div>
-          <div className="h-64">
-                        <ResponsiveContainer width="100%" height="100%">
+          <div className="h-64 w-full min-w-0">
+            <ResponsiveContainer width="100%" height="100%">
               {chartType === 'area' ? (
                 <AreaChart data={chart} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
                   <defs>
@@ -117,7 +117,7 @@ export function DashboardPage() {
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                  <XAxis dataKey="date" tick={{ fontSize: 11 }} stroke="#9ca3af" />
+                  <XAxis dataKey="date" tick={{ fontSize: 11 }} stroke="#9ca3af" minTickGap={24} />
                   <YAxis allowDecimals={false} tick={{ fontSize: 11 }} stroke="#9ca3af" />
                   <Tooltip />
                   <Legend verticalAlign="top" height={30} />
@@ -128,7 +128,7 @@ export function DashboardPage() {
               ) : (
                 <BarChart data={chart} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                  <XAxis dataKey="date" tick={{ fontSize: 11 }} stroke="#9ca3af" />
+                  <XAxis dataKey="date" tick={{ fontSize: 11 }} stroke="#9ca3af" minTickGap={24} />
                   <YAxis allowDecimals={false} tick={{ fontSize: 11 }} stroke="#9ca3af" />
                   <Tooltip />
                   <Legend verticalAlign="top" height={30} />
