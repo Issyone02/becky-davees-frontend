@@ -50,23 +50,23 @@ export function DashboardPage() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         {isAdmin && (
           <>
-            <StatCard icon={<Users className="h-5 w-5" />} label="Active Students" value={stats.totals?.students ?? 0} tone="primary" />
-            <StatCard icon={<BookOpen className="h-5 w-5" />} label="Classes" value={stats.totals?.classes ?? 0} tone="info" />
-            <StatCard icon={<UserCheck className="h-5 w-5" />} label="Teachers" value={stats.totals?.teachers ?? 0} tone="success" />
-            <StatCard icon={<UserPlus className="h-5 w-5" />} label="Pending Registrations" value={stats.totals?.pendingRegistrations ?? 0} tone="warning" link="/users" />
+            <StatCard icon={<Users className="h-5 w-5" />} label="Active Students" value={stats.totals?.students ?? 0} tone="primary" link="/students" />
+            <StatCard icon={<BookOpen className="h-5 w-5" />} label="Classes" value={stats.totals?.classes ?? 0} tone="info" link="/academics" />
+            <StatCard icon={<UserCheck className="h-5 w-5" />} label="Teachers" value={stats.totals?.teachers ?? 0} tone="success" link="/teachers" />
+            <StatCard icon={<UserPlus className="h-5 w-5" />} label="Pending Registrations" value={stats.totals?.pendingRegistrations ?? 0} tone="warning" link="/registrations" />
           </>
         )}
         {isTeacher && (
           <>
-            <StatCard icon={<BookOpen className="h-5 w-5" />} label="My Classes" value={stats.my?.classes ?? 0} tone="primary" />
-            <StatCard icon={<Users className="h-5 w-5" />} label="My Students" value={stats.my?.students ?? 0} tone="info" />
-            <StatCard icon={<Clock className="h-5 w-5" />} label="Periods Today" value={stats.my?.todayPeriods ?? 0} tone="success" />
+            <StatCard icon={<BookOpen className="h-5 w-5" />} label="My Classes" value={stats.my?.classes ?? 0} tone="primary" link="/timetable" />
+            <StatCard icon={<Users className="h-5 w-5" />} label="My Students" value={stats.my?.students ?? 0} tone="info" link="/students" />
+            <StatCard icon={<Clock className="h-5 w-5" />} label="Periods Today" value={stats.my?.todayPeriods ?? 0} tone="success" link="/attendance" />
           </>
         )}
         {isParent && (
           <>
-            <StatCard icon={<Users className="h-5 w-5" />} label="My Children" value={stats.my?.children ?? 0} tone="primary" />
-            <StatCard icon={<BookOpen className="h-5 w-5" />} label="Classes" value={new Set(stats.my?.names?.map((n: any) => n.className)).size ?? 0} tone="info" />
+            <StatCard icon={<Users className="h-5 w-5" />} label="My Children" value={stats.my?.children ?? 0} tone="primary" link="/children" />
+            <StatCard icon={<BookOpen className="h-5 w-5" />} label="Classes" value={new Set(stats.my?.names?.map((n: any) => n.className)).size ?? 0} tone="info" link="/timetable" />
           </>
         )}
       </div>
@@ -187,21 +187,45 @@ export function DashboardPage() {
               </div>
             </Card>
 
-            <Card>
-              <h2 className="font-semibold text-text-primary mb-3">Today's Attendance</h2>
-              <div className="space-y-2">
-                <TodayRow icon={<UserCheck className="h-4 w-4 text-green-600" />} label="Present" value={stats.totals?.todayAttendance?.present ?? 0} />
-                <TodayRow icon={<Clock className="h-4 w-4 text-amber-600" />} label="Late" value={stats.totals?.todayAttendance?.late ?? 0} />
-                <TodayRow icon={<UserX className="h-4 w-4 text-red-600" />} label="Absent" value={stats.totals?.todayAttendance?.absent ?? 0} />
-                <TodayRow icon={<AlertCircle className="h-4 w-4 text-blue-600" />} label="Excused" value={stats.totals?.todayAttendance?.excused ?? 0} />
-              </div>
-            </Card>
+            <Link to="/attendance" className="block">
+              <Card className="cursor-pointer hover:shadow-elevated transition-shadow">
+                <h2 className="font-semibold text-text-primary mb-3">Today's Attendance</h2>
+                <div className="space-y-2">
+                  <TodayRow icon={<UserCheck className="h-4 w-4 text-green-600" />} label="Present" value={stats.totals?.todayAttendance?.present ?? 0} />
+                  <TodayRow icon={<Clock className="h-4 w-4 text-amber-600" />} label="Late" value={stats.totals?.todayAttendance?.late ?? 0} />
+                  <TodayRow icon={<UserX className="h-4 w-4 text-red-600" />} label="Absent" value={stats.totals?.todayAttendance?.absent ?? 0} />
+                  <TodayRow icon={<AlertCircle className="h-4 w-4 text-blue-600" />} label="Excused" value={stats.totals?.todayAttendance?.excused ?? 0} />
+                </div>
+              </Card>
+            </Link>
           </>
         )}
 
         {isTeacher && (
-          <Card className="lg:col-span-2">
-            <h2 className="font-semibold text-text-primary mb-3">Upcoming Events</h2>
+          <Link to="/communications" className="block lg:col-span-2">
+            <Card className="cursor-pointer hover:shadow-elevated transition-shadow">
+              <h2 className="font-semibold text-text-primary mb-3">Upcoming Events</h2>
+              {events.length === 0 ? (
+                <p className="text-sm text-text-muted">No upcoming events.</p>
+              ) : (
+                <div className="space-y-2">
+                  {events.map((e) => (
+                    <div key={e.id} className="flex items-center gap-3 bg-gray-50 rounded-input px-3 py-2">
+                      <CalendarDays className="h-5 w-5 text-primary shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm font-medium text-text-primary truncate">{e.title}</div>
+                        <div className="text-xs text-text-muted">
+                          {new Date(e.startDate).toLocaleDateString()}
+                          {e.location ? ` · ${e.location}` : ''}
+                        </div>
+                      </div>
+                      <span className="badge badge-info">{e.audience}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </Card>
+          </Link>
             {events.length === 0 ? (
               <p className="text-sm text-text-muted">No upcoming events.</p>
             ) : (
