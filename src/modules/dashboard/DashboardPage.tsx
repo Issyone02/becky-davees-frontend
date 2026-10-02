@@ -164,7 +164,7 @@ export function DashboardPage() {
         </Card>
       </div>
 
-      {/* Role-specific bottom section */}
+            {/* Role-specific bottom section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {isAdmin && (
           <>
@@ -226,49 +226,31 @@ export function DashboardPage() {
               )}
             </Card>
           </Link>
-            {events.length === 0 ? (
-              <p className="text-sm text-text-muted">No upcoming events.</p>
-            ) : (
-              <div className="space-y-2">
-                {events.map((e) => (
-                  <div key={e.id} className="flex items-center gap-3 bg-gray-50 rounded-input px-3 py-2">
-                    <CalendarDays className="h-5 w-5 text-primary shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      <div className="text-sm font-medium text-text-primary truncate">{e.title}</div>
-                      <div className="text-xs text-text-muted">
-                        {new Date(e.startDate).toLocaleDateString()}
-                        {e.location ? ` · ${e.location}` : ''}
-                      </div>
-                    </div>
-                    <span className="badge badge-info">{e.audience}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-          </Card>
         )}
 
         {isParent && (
-          <Card className="lg:col-span-2">
-            <h2 className="font-semibold text-text-primary mb-3">My Children</h2>
-            {(stats.my?.names ?? []).length === 0 ? (
-              <p className="text-sm text-text-muted">No children linked to your account yet.</p>
-            ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {stats.my.names.map((k: any) => (
-                  <div key={k.id} className="flex items-center gap-3 bg-gray-50 rounded-input px-3 py-2">
-                    <div className="h-8 w-8 rounded-full bg-primary-light text-primary font-semibold flex items-center justify-center">
-                      {k.name.charAt(0)}
+          <Link to="/children" className="block lg:col-span-2">
+            <Card className="cursor-pointer hover:shadow-elevated transition-shadow">
+              <h2 className="font-semibold text-text-primary mb-3">My Children</h2>
+              {(stats.my?.names ?? []).length === 0 ? (
+                <p className="text-sm text-text-muted">No children linked to your account yet.</p>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {stats.my.names.map((k: any) => (
+                    <div key={k.id} className="flex items-center gap-3 bg-gray-50 rounded-input px-3 py-2">
+                      <div className="h-8 w-8 rounded-full bg-primary-light text-primary font-semibold flex items-center justify-center">
+                        {k.name.charAt(0)}
+                      </div>
+                      <div className="min-w-0">
+                        <div className="text-sm font-medium text-text-primary truncate">{k.name}</div>
+                        <div className="text-xs text-text-muted">{k.className}</div>
+                      </div>
                     </div>
-                    <div className="min-w-0">
-                      <div className="text-sm font-medium text-text-primary truncate">{k.name}</div>
-                      <div className="text-xs text-text-muted">{k.className}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </Card>
+                  ))}
+                </div>
+              )}
+            </Card>
+          </Link>
         )}
       </div>
     </div>
