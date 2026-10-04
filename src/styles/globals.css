@@ -142,7 +142,7 @@
 
   /* Compressed images (logo, signatures, stamp) */
   .print-area img {
-    max-height: 38px !important;
+    max-height: 120px !important; /* Doubled from 38px for logo legibility */
   }
 
   /* Tightened vertical rhythm */

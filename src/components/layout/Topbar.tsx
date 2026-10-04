@@ -2,6 +2,7 @@ import { GlobalSearch } from './GlobalSearch';
 import { Menu } from 'lucide-react';
 import { useAuthStore } from '../../store/auth.store';
 import { NotificationBell } from './NotificationBell';
+import { InstallAppButton } from './InstallAppButton';
 import { assetUrl } from '../../utils/assetUrl';
 
 interface TopbarProps {
@@ -20,7 +21,7 @@ export function Topbar({ onMenu, onMenuClick }: TopbarProps) {
       <div className="flex items-center gap-3 flex-1 min-w-0">
         {openMenu && (
           <button onClick={openMenu} title="Open menu"
-            className="p-2 rounded-input hover:bg-primary-light text-text-secondary shrink-0">
+            className="lg:hidden p-2 rounded-input hover:bg-primary-light text-text-secondary shrink-0">
             <Menu className="h-5 w-5" />
           </button>
         )}
@@ -29,6 +30,7 @@ export function Topbar({ onMenu, onMenuClick }: TopbarProps) {
 
       {/* Right: bell + profile, pinned to the far-right corner */}
       <div className="flex items-center gap-3 shrink-0">
+        <InstallAppButton />
         <NotificationBell />
         <div className="flex items-center gap-2">
           {user.profilePictureUrl ? (
