@@ -561,8 +561,8 @@ export function ReceiptModal({ paymentId, onClose }: { paymentId: string | null;
             </tbody>
           </table>
           <div className="mt-8 grid grid-cols-2 gap-8 text-[11px]">
-            <div className="text-center"><div className="border-b border-black h-10"></div>Received by: {p.recorder?.fullName ?? ''}</div>
-            <div className="text-center"><div className="border-b border-black h-10"></div>Signature / Stamp</div>
+            <div className="text-center pt-1">Received by: School Admin</div>
+            <div className="text-center pt-1">Date Printed: {new Date().toLocaleDateString()}</div>
           </div>
           <div className="text-[10px] text-center mt-4 italic">Computer-generated receipt — valid without hand signature when printed from the portal.</div>
         </div>
