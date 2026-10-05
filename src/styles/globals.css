@@ -315,3 +315,27 @@ img[alt="Class Teacher Signature"] img[alt="Head Teacher Signature"] {
   max-width: 100% !important;
   object-fit: contain !important;
 }
+
+/* ========== MODAL PRINT UNCLIP (receipts inside popups) — keep this block last ========== */
+@media print {
+  html,
+  body {
+    height: auto !important;
+    overflow: visible !important;
+  }
+  div {
+    overflow: visible !important;
+  }
+  [class*="fixed"],
+  [class*="absolute"],
+  [class*="relative"],
+  [class*="sticky"] {
+    position: static !important;
+  }
+  .print-area {
+    position: absolute !important;
+    inset: 0 auto auto 0 !important;
+    width: 100% !important;
+    max-height: none !important;
+  }
+}
