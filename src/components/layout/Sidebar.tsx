@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom';
 import { useAuthStore } from '../../store/auth.store';
 import { cn } from '../../utils/cn';
 import { assetUrl } from '../../utils/assetUrl';
+import { useSchoolInfo } from '../../hooks/useSchoolInfo';
 import {
   LayoutDashboard, Users, GraduationCap, UserCheck, BookOpen, ClipboardList,
   CalendarDays, FileText, DollarSign, Newspaper, BarChart3, Settings, LogOut,
@@ -76,19 +77,28 @@ export function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
   const { user, logout } = useAuthStore();
   if (!user) return null;
   const items = navByRole[user.role] ?? [];
+  const info = useSchoolInfo();
 
   return (
     <div className="flex flex-col h-full">
-      <div className="p-6 border-b border-border flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="h-9 w-9 rounded-lg bg-primary flex items-center justify-center text-white font-bold">S</div>
-          <div>
-            <div className="font-bold text-text-primary">SchoolMS</div>
+      <div className="p-4 border-b border-border flex items-center justify-between gap-2">
+        <div className="flex items-center gap-3 min-w-0">
+          {info?.logoUrl ? (
+            <img src={assetUrl(info.logoUrl)!} alt={`${info.schoolName ?? 'School'} logo`}
+              className="h-10 w-10 rounded-lg object-contain bg-white border border-border shrink-0" />
+          ) : (
+            <div className="h-10 w-10 rounded-lg bg-primary flex items-center justify-center text-white font-bold shrink-0">
+              {(info?.schoolName ?? 'S').charAt(0).toUpperCase()}
+            </div>
+          )}
+          <div className="min-w-0">
+            <div className="font-bold text-text-primary truncate">{info?.schoolName ?? 'SchoolMS'}</div>
+            {info?.motto && <div className="text-[10px] italic text-text-muted truncate">{info.motto}</div>}
             <div className="text-xs text-text-muted capitalize">{user.role.replace('_', ' ')}</div>
           </div>
         </div>
         {onNavigate && (
-          <button onClick={onNavigate} className="p-1 text-text-muted"><X className="h-5 w-5" /></button>
+          <button onClick={onNavigate} className="p-1 text-text-muted shrink-0"><X className="h-5 w-5" /></button>
         )}
       </div>
 

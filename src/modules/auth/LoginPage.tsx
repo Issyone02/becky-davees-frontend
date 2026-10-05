@@ -5,6 +5,8 @@ import { Button } from '../../components/ui/Button';
 import { login } from '../../api/auth';
 import { useAuthStore } from '../../store/auth.store';
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import { useSchoolInfo } from '../../hooks/useSchoolInfo';
+import { assetUrl } from '../../utils/assetUrl';
 
 export function LoginPage() {
   const nav = useNavigate();
@@ -13,6 +15,7 @@ export function LoginPage() {
   const [showPw, setShowPw] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const info = useSchoolInfo();
 
   if (user) {
     nav('/', { replace: true });
@@ -34,6 +37,17 @@ export function LoginPage() {
 
   return (
     <div>
+      <div className="text-center mb-6">
+        {info?.logoUrl && (
+          <img src={assetUrl(info.logoUrl)!} alt={`${info.schoolName ?? 'School'} logo`}
+            className="h-16 w-16 object-contain mx-auto mb-2" />
+        )}
+        <div className="text-xl font-extrabold text-text-primary uppercase tracking-wide">
+          {info?.schoolName ?? 'Welcome'}
+        </div>
+        {info?.motto && <div className="text-sm italic text-text-secondary mt-0.5">{info.motto}</div>}
+        {info?.address && <div className="text-xs text-text-muted mt-1">{info.address}</div>}
+      </div>
       <h2 className="text-2xl font-bold text-text-primary mb-1">Welcome Back</h2>
       <p className="text-text-secondary mb-6">Log in to your account to continue</p>
       <form onSubmit={onSubmit} className="space-y-4">
