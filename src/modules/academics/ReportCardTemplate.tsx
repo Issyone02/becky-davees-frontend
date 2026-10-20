@@ -1,5 +1,6 @@
 import { ReportCardData } from '../../api/results';
 import { assetUrl } from '../../utils/assetUrl';
+import { VerifyQR } from '../../components/ui/VerifyQR';
 const QUALITIES = ['Attentiveness', 'Cleanliness', 'Emotional Balance', 'Honesty', 'Leadership', 'Maturity', 'Politeness', 'Punctuality'];
 const ACTIVITIES = ['Handwriting', 'Verbal Fluency', 'Debate/Quiz', 'Sports', 'Drawing & Painting', 'Musical Skills', 'Handling Tools'];
 const RATING_COLS = [{ v: 'exc', l: 'Exc' }, { v: 'good', l: 'Good' }, { v: 'fair', l: 'Fair' }, { v: 'poor', l: 'Poor' }];
@@ -219,8 +220,8 @@ export function ReportCardTemplate({ data }: { data: ReportCardData & any }) {
           </tr>
         </tbody>
       </table>
-{/* Signatures */}
-      <div className="grid grid-cols-3 gap-4 items-end text-[11px] mt-24">
+      {/* Signatures + Verification QR */}
+      <div className="grid grid-cols-4 gap-4 items-end text-[11px] mt-24">
         <div className="text-center">
           {data.signatures?.teacher
             ? <img src={assetUrl(data.signatures.teacher)!} alt="Class Teacher Signature"
@@ -243,6 +244,9 @@ export function ReportCardTemplate({ data }: { data: ReportCardData & any }) {
                 className="mx-auto mb-1" />
             : <div className="border-b border-black h-12"></div>}
           <div className="mt-1">Head Teacher's Signature ({s?.headTeacherName ?? '____________'}) &nbsp; Date: {fmtDate(new Date())}</div>
+        </div>
+        <div className="text-center flex flex-col items-center justify-end h-full">
+          <VerifyQR url={`${window.location.origin}/verify/report-card/${data.student.id}/${data.term.id}`} />
         </div>
       </div>
     </div>
