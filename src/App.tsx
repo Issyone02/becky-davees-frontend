@@ -13,6 +13,7 @@ import { ForgotPasswordPage } from './modules/auth/ForgotPasswordPage';
 import { ResetPasswordPage } from './modules/auth/ResetPasswordPage';
 import { ChangePasswordPage } from './modules/auth/ChangePasswordPage';
 import { TermsPage, PrivacyPage } from './modules/auth/LegalPages';
+import { VerifyPage } from './modules/public/VerifyPage';
 import { DashboardPage } from './modules/dashboard/DashboardPage';
 import { StudentsPage } from './modules/students/StudentsPage';
 import { TeachersPage } from './modules/teachers/TeachersPage';
@@ -64,6 +65,8 @@ export function App() {
       <Routes>
         <Route path="/terms" element={<TermsPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/verify/receipt/:id" element={<VerifyPage kind="receipt" />} />
+        <Route path="/verify/report-card/:studentId/:termId" element={<VerifyPage kind="report-card" />} />
         <Route element={<AuthLayout />}>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />

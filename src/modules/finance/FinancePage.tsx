@@ -10,6 +10,7 @@ import { Input } from '../../components/ui/Input';
 import { Select } from '../../components/ui/Select';
 import { Modal } from '../../components/ui/Modal';
 import { Plus, Pencil, Printer, Receipt, BookOpen, Ban, ChevronDown, Copy } from 'lucide-react';
+import QRCode from 'qrcode';
 
 const tabs = ['Fee Structures', 'Balances', 'Payments'] as const;
 type Tab = (typeof tabs)[number];
@@ -524,10 +525,18 @@ function PaymentsTab({ terms, classes }: { terms: TermItem[]; classes: ClassFull
 
 export function ReceiptModal({ paymentId, onClose }: { paymentId: string | null; onClose: () => void }) {
   const [data, setData] = useState<{ payment: any; settings: any } | null>(null);
+  const [qr, setQr] = useState<string | null>(null);
 
   useEffect(() => {
     if (!paymentId) return;
     fin.fetchReceipt(paymentId).then(setData).catch(console.error);
+  }, [paymentId]);
+
+  useEffect(() => {
+    if (!paymentId) { setQr(null); return; }
+    QRCode.toDataURL(`${window.location.origin}/verify/receipt/${paymentId}`, { margin: 1, width: 160 })
+      .then(setQr)
+      .catch(() => setQr(null));
   }, [paymentId]);
 
   const p = data?.payment;
@@ -564,7 +573,15 @@ export function ReceiptModal({ paymentId, onClose }: { paymentId: string | null;
             <div className="text-center pt-1">Received by: School Admin</div>
             <div className="text-center pt-1">Date Printed: {new Date().toLocaleDateString()}</div>
           </div>
-          <div className="text-[10px] text-center mt-4 italic">Computer-generated receipt — valid without hand signature when printed from the portal.</div>
+          <div className="mt-4 flex items-end justify-between gap-4">
+            <div className="text-[10px] italic text-center flex-1">Computer-generated receipt — valid without hand signature when printed from the portal.</div>
+            {qr && (
+              <div className="text-center shrink-0">
+                <img src={qr} alt="Scan to verify" className="h-20 w-20 mx-auto" />
+                <div className="text-[9px] mt-0.5">Scan to verify</div>
+              </div>
+            )}
+          </div>
         </div>
       )}
     </Modal>
