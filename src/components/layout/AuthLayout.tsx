@@ -43,7 +43,7 @@ export function AuthLayout() {
         <div>
           <h1 className="text-4xl font-extrabold text-text-primary leading-tight">
             Get Started With Your<br />
-            <span className="text-primary">Account</span>
+            <span style={{ color: brandColor }}>Account</span>
           </h1>
           <p className={`mt-3 max-w-md text-text-secondary ${info?.motto ? 'italic' : ''}`}>
             {info?.motto ?? 'Smart insights, better decisions. Manage your school with confidence.'}

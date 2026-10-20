@@ -44,7 +44,7 @@ export function LoginPage() {
           <img src={assetUrl(info.logoUrl)!} alt={`${info.schoolName ?? 'School'} logo`}
             className="h-16 w-16 object-contain mx-auto mb-2" />
         )}
-        <div className="text-xl font-extrabold text-text-primary uppercase tracking-wide">
+        <div className="text-xl font-extrabold uppercase tracking-wide" style={{ color: brandColor }}>
           {info?.schoolName ?? 'Welcome'}
         </div>
         {info?.motto && <div className="text-sm italic text-text-secondary mt-0.5">{info.motto}</div>}

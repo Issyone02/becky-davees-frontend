@@ -3,6 +3,7 @@ import { useAuthStore } from '../../store/auth.store';
 import { cn } from '../../utils/cn';
 import { assetUrl } from '../../utils/assetUrl';
 import { useSchoolInfo } from '../../hooks/useSchoolInfo';
+import { useBrandColor } from '../../hooks/useBrandColor';
 import {
   LayoutDashboard, Users, GraduationCap, UserCheck, BookOpen, ClipboardList,
   CalendarDays, FileText, DollarSign, Newspaper, BarChart3, Settings, LogOut,
@@ -78,6 +79,7 @@ export function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
   if (!user) return null;
   const items = navByRole[user.role] ?? [];
   const info = useSchoolInfo();
+  const brandColor = useBrandColor();
 
   return (
     <div className="flex flex-col h-full">
@@ -92,7 +94,7 @@ export function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
             </div>
           )}
           <div className="min-w-0">
-            <div className="font-bold text-text-primary truncate">{info?.schoolName ?? 'SchoolMS'}</div>
+            <div className="font-bold truncate" style={{ color: brandColor }}>{info?.schoolName ?? 'SchoolMS'}</div>
             {info?.motto && <div className="text-[10px] italic text-text-muted truncate">{info.motto}</div>}
             <div className="text-xs text-text-muted capitalize">{user.role.replace('_', ' ')}</div>
           </div>
