@@ -6,6 +6,7 @@ import { login } from '../../api/auth';
 import { useAuthStore } from '../../store/auth.store';
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { useSchoolInfo } from '../../hooks/useSchoolInfo';
+import { useBrandColor } from '../../hooks/useBrandColor';
 import { assetUrl } from '../../utils/assetUrl';
 
 export function LoginPage() {
@@ -16,6 +17,7 @@ export function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const info = useSchoolInfo();
+  const brandColor = useBrandColor();
 
   if (user) {
     nav('/', { replace: true });
@@ -36,7 +38,7 @@ export function LoginPage() {
   }
 
   return (
-    <div>
+    <div style={{ '--brand-color': brandColor } as React.CSSProperties}>
       <div className="text-center mb-6">
         {info?.logoUrl && (
           <img src={assetUrl(info.logoUrl)!} alt={`${info.schoolName ?? 'School'} logo`}

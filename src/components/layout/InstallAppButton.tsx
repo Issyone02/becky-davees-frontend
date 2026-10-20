@@ -7,7 +7,7 @@ export function InstallAppButton() {
   return (
     <button
       onClick={() => promptInstall()}
-      title="Install Becky Davees School on this device"
+      title="Install Mannaplus School on this device"
       className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-input bg-primary text-white text-xs font-semibold hover:bg-primary-dark transition-colors"
     >
       <Download className="h-4 w-4" /> Install App

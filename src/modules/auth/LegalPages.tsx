@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Card } from '../../components/ui/Card';
 
-const SCHOOL = 'Becky Davees Private School';
+const SCHOOL = 'Mannaplus Private School';
 const UPDATED = '28 September 2026';
 
 interface Section { h: string; p: string[] }

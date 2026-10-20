@@ -42,6 +42,7 @@ function ProfileTab() {
   const [form, setForm] = useState({
     schoolName: '', motto: '', address: '', phone: '', email: '', headTeacherName: '',
     logoUrl: '', officialStampUrl: '', headTeacherSignatureUrl: '',
+    brandColor: '',
   });
   const [saving, setSaving] = useState(false);
   const [info, setInfo] = useState<string | null>(null);
@@ -53,6 +54,7 @@ function ProfileTab() {
         schoolName: s.schoolName ?? '', motto: s.motto ?? '', address: s.address ?? '',
         phone: s.phone ?? '', email: s.email ?? '', headTeacherName: s.headTeacherName ?? '',
         logoUrl: s.logoUrl ?? '', officialStampUrl: s.officialStampUrl ?? '', headTeacherSignatureUrl: s.headTeacherSignatureUrl ?? '',
+        brandColor: s.brandColor ?? '',
       });
     }).catch(console.error);
   }, []);
@@ -87,6 +89,30 @@ function ProfileTab() {
         <Input label="Phone Numbers (comma separated)" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
         <Input label="Email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
         <Input label="Head Teacher's Name" value={form.headTeacherName} onChange={(e) => setForm({ ...form, headTeacherName: e.target.value })} />
+        <div className="border-t border-border pt-4">
+          <label className="block text-sm font-medium text-text-primary mb-2">Brand Color</label>
+          <div className="flex items-center gap-3">
+            <input
+              type="color"
+              value={form.brandColor || '#4f46e5'}
+              onChange={(e) => setForm({ ...form, brandColor: e.target.value })}
+              className="h-10 w-16 rounded-input border border-border cursor-pointer"
+            />
+            <input
+              type="text"
+              value={form.brandColor || '#4f46e5'}
+              onChange={(e) => setForm({ ...form, brandColor: e.target.value })}
+              placeholder="#4f46e5"
+              className="flex-1 rounded-input border border-border bg-surface px-3 py-2 text-sm text-text-primary"
+            />
+            {form.brandColor && (
+              <Button variant="ghost" size="sm" onClick={() => setForm({ ...form, brandColor: '' })}>
+                Reset
+              </Button>
+            )}
+          </div>
+          <p className="text-xs text-text-muted mt-1">This color tints the login page, sidebar accent, and email headers.</p>
+        </div>
         <div className="space-y-3 border-t border-border pt-4">
           <UploadRow label="School Logo" value={form.logoUrl} onChange={(url) => setForm({ ...form, logoUrl: url })} />
           <UploadRow label="Official Stamp" value={form.officialStampUrl} onChange={(url) => setForm({ ...form, officialStampUrl: url })} />

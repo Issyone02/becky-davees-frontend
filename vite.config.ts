@@ -9,9 +9,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'icons/apple-touch-icon.png'],
       manifest: {
-        name: 'Becky Davees School Management System',
+        name: 'Mannaplus School Management System',
         short_name: 'SchoolMS',
-        description: 'Students, attendance, results, report cards, fees and communication for Becky Davees School.',
+        description: 'Students, attendance, results, report cards, fees and communication for Mannaplus School.',
         start_url: '/',
         scope: '/',
         display: 'standalone',
