@@ -71,7 +71,7 @@ function RootSwitch() {
 
 function HomeSwitch() {
   const user = useAuthStore((s) => s.user);
-  return user ? <DashboardPage /> : <PublicHomePage />;
+  return user ? <DashboardPage /> : <Navigate to="/home" replace />;
 }
 
 export function App() {
@@ -95,6 +95,7 @@ export function App() {
           <Route path="/" element={<HomeSwitch />} />
         </Route>
         <Route element={<PublicLayout />}>
+          <Route path="/home" element={<PublicHomePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/academics" element={<PublicAcademicsPage />} />
           <Route path="/admissions" element={<AdmissionsPage />} />

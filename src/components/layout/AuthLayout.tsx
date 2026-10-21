@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import { previewRoleTheme } from '../../utils/themePreview';
 import { useSchoolInfo } from '../../hooks/useSchoolInfo';
 import { useBrandColor } from '../../hooks/useBrandColor';
@@ -55,6 +55,9 @@ export function AuthLayout() {
       {/* Form panel — the ONLY Outlet */}
       <div className="flex items-center justify-center p-6">
         <div className="w-full max-w-md">
+          <Link to="/home" className="inline-flex items-center gap-1 text-sm text-text-secondary hover:text-primary mb-4">
+            ← Back to School Website
+          </Link>
           <Outlet />
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useAuthStore } from '../../store/auth.store';
 import { cn } from '../../utils/cn';
 import { assetUrl } from '../../utils/assetUrl';
@@ -7,7 +7,7 @@ import { useBrandColor } from '../../hooks/useBrandColor';
 import {
   LayoutDashboard, Users, GraduationCap, UserCheck, BookOpen, ClipboardList,
   CalendarDays, FileText, DollarSign, Newspaper, BarChart3, Settings, LogOut,
-  ClipboardCheck, UserCog, X, Megaphone, MessageSquare, Inbox, UserCircle
+  ClipboardCheck, UserCog, X, Megaphone, MessageSquare, Inbox, UserCircle, Globe
 } from 'lucide-react';
 
 const navByRole: Record<string, { label: string; to: string; icon: any }[]> = {
@@ -139,6 +139,12 @@ export function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
             <div className="text-xs text-text-muted truncate">{user.email}</div>
           </div>
         </div>
+        <Link
+          to="/home"
+          className="w-full flex items-center gap-2 px-3 py-2 text-sm text-text-secondary hover:bg-primary-light hover:text-primary rounded-input mb-1"
+        >
+          <Globe className="h-4 w-4" /> School Website
+        </Link>
         <button
           onClick={logout}
           className="w-full flex items-center gap-2 px-3 py-2 text-sm text-text-secondary hover:bg-red-50 hover:text-red-600 rounded-input"
