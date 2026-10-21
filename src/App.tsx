@@ -37,6 +37,13 @@ import { ChildReportCardsPage } from './modules/parent/ChildReportCardsPage';
 import { ParentFeesPage } from './modules/parent/ParentFeesPage';
 import { PromotionsPage } from './modules/promotions/PromotionsPage';
 import { MyAccountPage } from './modules/account/MyAccountPage';
+import { PublicLayout } from './components/layout/PublicLayout';
+import { PublicHomePage } from './modules/public/PublicHomePage';
+import { AboutPage } from './modules/public/AboutPage';
+import { PublicAcademicsPage } from './modules/public/AcademicsPage';
+import { AdmissionsPage } from './modules/public/AdmissionsPage';
+import { PublicNewsPage } from './modules/public/NewsPage';
+import { ContactPage } from './modules/public/ContactPage';
 
 
 
@@ -57,6 +64,16 @@ function ThemeSync() {
 }
 
 
+function RootSwitch() {
+  const user = useAuthStore((s) => s.user);
+  return user ? <DashboardLayout /> : <PublicLayout />;
+}
+
+function HomeSwitch() {
+  const user = useAuthStore((s) => s.user);
+  return user ? <DashboardPage /> : <PublicHomePage />;
+}
+
 export function App() {
   return (
         <BrowserRouter>
@@ -74,8 +91,17 @@ export function App() {
         <Route path="/reset-password" element={<ResetPasswordPage />} />
 
         </Route>
+        <Route element={<RootSwitch />}>
+          <Route path="/" element={<HomeSwitch />} />
+        </Route>
+        <Route element={<PublicLayout />}>
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/academics" element={<PublicAcademicsPage />} />
+          <Route path="/admissions" element={<AdmissionsPage />} />
+          <Route path="/news" element={<PublicNewsPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+        </Route>
         <Route element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
-          <Route path="/" element={<DashboardPage />} />
           <Route path="/change-password" element={<ChangePasswordPage />} />
           <Route path="/students" element={<RoleRoute roles={['SUPER_ADMIN', 'ADMIN']}><StudentsPage /></RoleRoute>} />
           <Route path="/teachers" element={<RoleRoute roles={['SUPER_ADMIN', 'ADMIN']}><TeachersPage /></RoleRoute>} />
@@ -85,10 +111,9 @@ export function App() {
           <Route path="/attendance" element={<AttendancePage />} />
           <Route path="/my-classes" element={<RoleRoute roles={['TEACHER']}><MyClassesPage /></RoleRoute>} />
           <Route path="/my-students" element={<RoleRoute roles={['TEACHER']}><MyStudentsPage /></RoleRoute>} />
-          <Route path="/academics" element={<ResultsPage />} />
+          <Route path="/scores" element={<ResultsPage />} />
           <Route path="/communications" element={<CommunicationsPage />} />
           <Route path="/announcements" element={<CommunicationsPage />} />
-          <Route path="/news" element={<CommunicationsPage />} />
           <Route path="/account" element={<MyAccountPage />} />
           <Route path="/children" element={<RoleRoute roles={['PARENT']}><MyChildrenPage /></RoleRoute>} />
           <Route path="/child/attendance" element={<RoleRoute roles={['PARENT']}><ChildAttendancePage /></RoleRoute>} />

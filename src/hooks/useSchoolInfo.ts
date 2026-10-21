@@ -1,23 +1,19 @@
 import { useEffect, useState } from 'react';
+import { getCachedInfo, prefetchInfo, PublicInfo } from './schoolCache';
 
-export type SchoolInfo = {
-  schoolName?: string | null;
-  motto?: string | null;
-  address?: string | null;
-  phone?: string | null;
-  email?: string | null;
-  logoUrl?: string | null;
-};
+export type SchoolInfo = PublicInfo;
 
 export function useSchoolInfo() {
-  const [info, setInfo] = useState<SchoolInfo | null>(null);
+  // Paint instantly from cache; refresh in background.
+  const [info, setInfo] = useState<SchoolInfo | null>(() => getCachedInfo());
+
   useEffect(() => {
     let cancelled = false;
-    fetch(`${import.meta.env.VITE_API_URL}/settings/public-info`)
-      .then((r) => (r.ok ? r.json() : null))
-      .then((j) => { if (!cancelled && j) setInfo(j.data ?? j); })
-      .catch(() => {});
+    prefetchInfo().then((data) => {
+      if (!cancelled && data) setInfo(data);
+    });
     return () => { cancelled = true; };
   }, []);
+
   return info;
 }
