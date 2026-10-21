@@ -53,14 +53,14 @@ export function NotificationBell() {
         )}
       </button>
       {open && (
-        <div className="absolute right-0 mt-2 w-80 max-w-[90vw] bg-surface border border-border rounded-card shadow-elevated z-50 overflow-hidden">
+        <div className="fixed inset-x-3 top-16 bg-surface border border-border rounded-card shadow-elevated z-50 overflow-hidden sm:absolute sm:inset-x-auto sm:top-full sm:right-0 sm:mt-2 sm:w-80 sm:max-w-[90vw]">
           <div className="flex items-center justify-between px-3 py-2 border-b border-border">
             <span className="text-sm font-semibold text-text-primary">Notifications</span>
             {count > 0 && (
               <button onClick={readAll} className="text-xs text-primary hover:underline">Mark all read</button>
             )}
           </div>
-          <div className="max-h-96 overflow-y-auto">
+          <div className="max-h-[60vh] sm:max-h-96 overflow-y-auto">
             {items.length === 0 && (
               <div className="px-3 py-6 text-sm text-text-muted text-center">No notifications yet.</div>
             )}
